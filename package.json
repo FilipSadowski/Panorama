@@ -16,7 +16,8 @@
     "next": "15.2.4",
     "photo-sphere-viewer": "^4.8.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
