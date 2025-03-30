@@ -35,7 +35,6 @@ export default function GallerySection({ setFullscreen }: { setFullscreen: (v: b
       setShowInfo(false)
       setStartFadeOut(false)
 
-      // Blokuj scroll strony
       body.style.overflow = 'hidden'
       html.style.overflow = 'hidden'
     } else {
@@ -95,7 +94,9 @@ export default function GallerySection({ setFullscreen }: { setFullscreen: (v: b
   }
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 1) {
+    const touches = e.touches as unknown as TouchList
+
+    if (touches.length === 1) {
       const now = Date.now()
       if (lastTap.current && now - lastTap.current < 300) {
         setZoomedIn(prev => !prev)
@@ -103,20 +104,22 @@ export default function GallerySection({ setFullscreen }: { setFullscreen: (v: b
         return
       }
       lastTap.current = now
-      touchStartX.current = e.touches[0].clientX
+      touchStartX.current = touches[0].clientX
     } else {
       touchStartX.current = null
     }
 
-    if (e.touches.length === 2) {
+    if (touches.length === 2) {
       pinchZooming.current = false
-      initialPinchDistance.current = getDistance(e.touches)
+      initialPinchDistance.current = getDistance(touches)
     }
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length === 2 && initialPinchDistance.current !== null) {
-      const currentDistance = getDistance(e.touches)
+    const touches = e.touches as unknown as TouchList
+
+    if (touches.length === 2 && initialPinchDistance.current !== null) {
+      const currentDistance = getDistance(touches)
       const zoomThreshold = 10
       if (Math.abs(currentDistance - initialPinchDistance.current) > zoomThreshold) {
         pinchZooming.current = true
@@ -145,104 +148,102 @@ export default function GallerySection({ setFullscreen }: { setFullscreen: (v: b
   }
 
   return (
-    <>
-      <div className="bg-black min-h-screen">
-        <div className="px-4 pt-6 pb-6">
-          <h1 className="text-white text-2xl sm:text-4xl font-bold mb-2">Galeria Projektu</h1>
-          <div className="h-0.5 w-screen100 bg-white rounded-full" />
-        </div>
-
-        <div className="px-4 pb-8 columns-2 space-y-4 overflow-y-auto max-h-[calc(100vh-8rem)] pr-2">
-          {images.map((item, i) => {
-            const [loaded, setLoaded] = useState(false)
-            return (
-              <div
-                key={i}
-                className="mb-4 break-inside-avoid rounded-2xl overflow-hidden cursor-pointer group relative"
-                onClick={() => setSelectedIndex(i)}
-              >
-                {!loaded && (
-                  <div className="absolute inset-0 bg-zinc-800 animate-pulse rounded-2xl" />
-                )}
-                <img
-                  src={item.src}
-                  alt={`img-${i}`}
-                  className={`w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105 ${
-                    loaded ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  loading="lazy"
-                  onLoad={() => setLoaded(true)}
-                />
-              </div>
-            )
-          })}
-        </div>
-
-        <AnimatePresence>
-          {selectedIndex !== null && (
-            <motion.div
-              className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center overflow-y-auto scrollbar scrollbar-none md:scrollbar"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              <button
-                className="absolute top-3 right-4 text-white text-3xl font-bold z-50"
-                onClick={handleClose}
-              >
-                ✕
-              </button>
-
-              <button
-                className="absolute top-1 left-2 z-50 p-2 rounded-full transition hover:scale-110 active:scale-95"
-                onClick={() => {
-                  setShowInfo(prev => !prev)
-                  setStartFadeOut(false)
-                }}
-              >
-                <Info className="w-8 h-8 text-white drop-shadow-lg" />
-              </button>
-
-              <motion.img
-                key={images[selectedIndex].src}
-                src={images[selectedIndex].src}
-                alt={`full-${selectedIndex}`}
-                className="max-w-full max-h-full rounded-2xl shadow-2xl"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  scale: zoomedIn ? 2 : 1,
-                  transition: { duration: 0.3 }
-                }}
-                exit={{ scale: 0.9, opacity: 0 }}
-              />
-
-              <AnimatePresence>
-                {showInfo && (
-                  <motion.div
-                    className="absolute bottom-16 left-4 right-4 bg-black/70 text-white rounded-xl p-4 text-sm z-40"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{
-                      opacity: startFadeOut ? 0 : 1,
-                      y: startFadeOut ? 20 : 0,
-                      transition: { duration: 0.3 }
-                    }}
-                    exit={{ opacity: 0, y: 20 }}
-                  >
-                    <h2 className="text-lg font-semibold mb-1">
-                      {images[selectedIndex].title}
-                    </h2>
-                    <p className="text-gray-300">{images[selectedIndex].description}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          )}
-        </AnimatePresence>
+    <div className="bg-black min-h-screen">
+      <div className="px-4 pt-6 pb-6">
+        <h1 className="text-white text-2xl sm:text-4xl font-bold mb-2">Galeria Projektu</h1>
+        <div className="h-0.5 w-screen100 bg-white rounded-full" />
       </div>
-    </>
+
+      <div className="px-4 pb-8 columns-2 space-y-4 overflow-y-auto max-h-[calc(100vh-8rem)] pr-2">
+        {images.map((item, i) => {
+          const [loaded, setLoaded] = useState(false)
+          return (
+            <div
+              key={i}
+              className="mb-4 break-inside-avoid rounded-2xl overflow-hidden cursor-pointer group relative"
+              onClick={() => setSelectedIndex(i)}
+            >
+              {!loaded && (
+                <div className="absolute inset-0 bg-zinc-800 animate-pulse rounded-2xl" />
+              )}
+              <img
+                src={item.src}
+                alt={`img-${i}`}
+                className={`w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105 ${
+                  loaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                loading="lazy"
+                onLoad={() => setLoaded(true)}
+              />
+            </div>
+          )
+        })}
+      </div>
+
+      <AnimatePresence>
+        {selectedIndex !== null && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center overflow-y-auto scrollbar scrollbar-none md:scrollbar"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <button
+              className="absolute top-3 right-4 text-white text-3xl font-bold z-50"
+              onClick={handleClose}
+            >
+              ✕
+            </button>
+
+            <button
+              className="absolute top-1 left-2 z-50 p-2 rounded-full transition hover:scale-110 active:scale-95"
+              onClick={() => {
+                setShowInfo(prev => !prev)
+                setStartFadeOut(false)
+              }}
+            >
+              <Info className="w-8 h-8 text-white drop-shadow-lg" />
+            </button>
+
+            <motion.img
+              key={images[selectedIndex].src}
+              src={images[selectedIndex].src}
+              alt={`full-${selectedIndex}`}
+              className="max-w-full max-h-full rounded-2xl shadow-2xl"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{
+                opacity: 1,
+                scale: zoomedIn ? 2 : 1,
+                transition: { duration: 0.3 }
+              }}
+              exit={{ scale: 0.9, opacity: 0 }}
+            />
+
+            <AnimatePresence>
+              {showInfo && (
+                <motion.div
+                  className="absolute bottom-16 left-4 right-4 bg-black/70 text-white rounded-xl p-4 text-sm z-40"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{
+                    opacity: startFadeOut ? 0 : 1,
+                    y: startFadeOut ? 20 : 0,
+                    transition: { duration: 0.3 }
+                  }}
+                  exit={{ opacity: 0, y: 20 }}
+                >
+                  <h2 className="text-lg font-semibold mb-1">
+                    {images[selectedIndex].title}
+                  </h2>
+                  <p className="text-gray-300">{images[selectedIndex].description}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
