@@ -5,14 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Info } from 'lucide-react'
 
 const images = [
-  { src: '/images/1.jpg', title: 'Widok sali koncertowej ze sceny', description: 'Ciepłe kolory nad jeziorem.' },
-  { src: '/images/2.jpg', title: 'Widok sali koncertowej ze sceny bez balkonu', description: 'Mgła unosząca się nad szczytami.' },
-  { src: '/images/3.jpg', title: 'Miejski zgiełk', description: 'Ulica tętniąca życiem nocą.' },
-  { src: '/images/4.jpg', title: 'Spokojna zatoka', description: 'Jachty zacumowane przy kei.' },
+  { src: '/images/1.jpg', title: 'Z Wyspy Słodowej nocą', description: 'Kolorowe oświetlenie podczas wydarzenia z zamkniętą seceną.' },
+  { src: '/images/2.jpg', title: 'Z Wyspy Słodowej nocą', description: 'Kolorowe oświetlenie podczas wydarzenia z otwartą seceną.' },
+  { src: '/images/3.jpg', title: 'Z Wyspy Słodowej nocą', description: 'Ciepłe oświetlenie podczas wydarzenia z zamkniętą seceną.' },
+  { src: '/images/4.jpg', title: 'Urządzony brzeg', description: 'Zaprojektowany by umilić ludziom czas nad wodą.' },
   { src: '/images/5.jpg', title: 'Spokojna zatoka', description: 'Jachty zacumowane przy kei.' },
-  { src: '/images/6.jpg', title: 'Spokojna zatoka', description: 'Jachty zacumowane przy kei.' },
-  { src: '/images/7.jpg', title: 'Spokojna zatoka', description: 'Jachty zacumowane przy kei.' },
-  { src: '/images/8.jpg', title: 'Spokojna zatoka', description: 'Jachty zacumowane przy kei.' }
+  { src: '/images/6.jpg', title: 'Wejście Główne', description: 'Widok z mostu św. Macieja, jedynego lądowego przejścia na Tamkę.' },
+  { src: '/images/7.jpg', title: 'Foyer Główne', description: 'Przestrzeń gromadzenia się ludzi poza salą główną, gra antresoli, schodów i świateł.' },
+  { src: '/images/8.jpg', title: 'Sala Wielofunkcyjna', description: 'Serce budynku w środku.' }
 ]
 
 export default function GallerySection({ setFullscreen }: { setFullscreen: (v: boolean) => void }) {
