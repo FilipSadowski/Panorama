@@ -9,10 +9,10 @@ const images = [
   { src: '/images/2.jpg', title: 'Z Wyspy Słodowej nocą', description: 'Kolorowe oświetlenie podczas wydarzenia z otwartą seceną.' },
   { src: '/images/3.jpg', title: 'Z Wyspy Słodowej nocą', description: 'Ciepłe oświetlenie podczas wydarzenia z zamkniętą seceną.' },
   { src: '/images/4.jpg', title: 'Urządzony brzeg', description: 'Zaprojektowany by umilić ludziom czas nad wodą.' },
-  { src: '/images/5.jpg', title: 'Spokojna zatoka', description: 'Jachty zacumowane przy kei.' },
-  { src: '/images/6.jpg', title: 'Wejście Główne', description: 'Widok z mostu św. Macieja, jedynego lądowego przejścia na Tamkę.' },
-  { src: '/images/7.jpg', title: 'Foyer Główne', description: 'Przestrzeń gromadzenia się ludzi poza salą główną, gra antresoli, schodów i świateł.' },
-  { src: '/images/8.jpg', title: 'Sala Wielofunkcyjna', description: 'Serce budynku w środku.' }
+  { src: '/images/5.jpg', title: 'Schemat Parteru', description: 'Główne i wejsciowe foyer, restauracja, sala uzupełnione o obsługę.' },
+  { src: '/images/6.jpg', title: 'Schemat Piętra', description: 'Antresola foyer, balkony i biura znajdują się na tej kondygnacji.' },
+  { src: '/images/7.jpg', title: 'Schemat Garażu', description: 'Niewielki garaż z widną samochodową.' },
+  { src: '/images/8.jpg', title: 'Szkic Zagospodarowania Terenu', description: 'Serce budynku w środku.' }
 ]
 
 export default function GallerySection({ setFullscreen }: { setFullscreen: (v: boolean) => void }) {
