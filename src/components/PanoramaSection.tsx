@@ -8,19 +8,19 @@ import { Info, PanelRightOpen, PanelRightClose } from 'lucide-react'
 
 const panoramas = [
   {
-    name: 'Panorama 1',
+    name: 'Foyer Główne',
     path: '/panoramas/my-panorama1.jpg',
-    description: 'This is a view of the main hall from the entrance perspective.'
+    description: 'Widok wewnątrz foyer z poziomu parteru. Znajdujemy się na samym końcu budynku.'
   },
   {
-    name: 'Panorama 2',
+    name: 'Sala Główna',
     path: '/panoramas/my-panorama2.jpg',
-    description: 'This scene shows the upper balcony with lighting setup.'
+    description: 'Akurtat pokazany koncert fortepianowy. Równie dobrze mógłby to byc koncert jazzowy albo studniówka.'
   },
   {
-    name: 'Panorama 3',
+    name: 'Widownia',
     path: '/panoramas/my-panorama3.jpg',
-    description: 'A backstage view showing technical equipment and wiring.'
+    description: 'Widok sali głównej z miejsca siedzącego na parterze.'
   }
 ]
 
