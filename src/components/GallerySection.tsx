@@ -6,9 +6,9 @@ import { Info } from 'lucide-react'
 
 const images = [
   { src: '/images/1.jpg', title: 'Z Wyspy Słodowej nocą', description: 'Kolorowe oświetlenie podczas wydarzenia z zamkniętą seceną.' },
-  { src: '/images/2.jpg', title: 'Z Wyspy Słodowej nocą', description: 'Kolorowe oświetlenie podczas wydarzenia z otwartą seceną.' },
-  { src: '/images/3.jpg', title: 'Z Wyspy Słodowej nocą', description: 'Ciepłe oświetlenie podczas wydarzenia z zamkniętą seceną.' },
-  { src: '/images/4.jpg', title: 'Urządzony brzeg', description: 'Zaprojektowany by umilić ludziom czas nad wodą.' },
+  { src: '/images/2.jpg', title: 'Z Wyspy Słodowej nocą', description: 'Koncert!!! Poszerzenie widowni o wyspę słodową.' },
+  { src: '/images/3.jpg', title: 'Widok z Mostu Uniwersyteckiego', description: 'Ciepłe oświetlenie wpasowuje się w przyjemne otoczenie.' },
+  { src: '/images/4.jpg', title: 'Wnętrze Sali', description: 'Nowoczesne kszatłty pomagające kształtować akustykę i umozliwiające zmienianie pomieszczenia.' },
   { src: '/images/5.jpg', title: 'Schemat Parteru', description: 'Główne i wejsciowe foyer, restauracja, sala uzupełnione o obsługę.' },
   { src: '/images/6.jpg', title: 'Schemat Piętra', description: 'Antresola foyer, balkony i biura znajdują się na tej kondygnacji.' },
   { src: '/images/7.jpg', title: 'Schemat Garażu', description: 'Niewielki garaż z widną samochodową.' },
