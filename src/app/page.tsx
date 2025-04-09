@@ -1,69 +1,133 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
-import { Eye, EyeOff } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import MobileMenu from '@/components/MobileMenu'
+import PanoramaSection from '@/components/PanoramaSection'
+import GallerySection from '@/components/GallerySection'
+import IntroScreen from '@/components/IntroScreen'
 
-export default function HomePage() {
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
-  const router = useRouter()
+export default function Home() {
+  const [active, setActive] = useState<'panorama' | 'gallery'>('panorama')
+  const [fullscreen, setFullscreen] = useState(false)
+  const [showIntro, setShowIntro] = useState(true)
+  const [menuOpen, setMenuOpen] = useState(false)
 
-  const correctPassword = 'jaga3betis0'
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (password === correctPassword) {
-      localStorage.setItem('access_granted', 'true')
-      router.push('/panorama')
-    } else {
-      setError(true)
+  useEffect(() => {
+    // Reset scroll and DOM on page load
+    window.scrollTo(0, 0);
+    
+    // Reset all transformations
+    document.body.style.transform = 'none';
+    document.documentElement.style.transform = 'none';
+    
+    // Reset overflow settings
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
+    
+    // Reset any meta viewport settings
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
     }
-  }
+    
+    document.body.classList.remove('overflow-hidden');
+  }, []);
+
+  useEffect(() => {
+    setShowIntro(true)
+    setActive('panorama')
+    setFullscreen(false)
+    setMenuOpen(false)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.location.hash = ''
+      window.history.scrollRestoration = 'manual'
+    }
+  }, [])
+  
+  useEffect(() => {
+    sessionStorage.clear()
+  }, [])
+
+  useEffect(() => {
+    // Zresetuj scroll i DOM przy każdym ładowaniu strony
+    window.scrollTo(0, 0)
+    document.body.classList.remove('overflow-hidden')
+  
+    // Możesz też przywrócić skalę widoku
+    document.body.style.transform = ''
+    document.body.style.overflow = 'auto'
+  }, [])
+  
+
+
+  // 🔒 Lock page scroll when in gallery (not fullscreen)
+  useEffect(() => {
+    if (active === 'gallery' && !fullscreen) {
+      document.body.classList.add('overflow-hidden')
+    } else {
+      document.body.classList.remove('overflow-hidden')
+    }
+
+    return () => {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [active, fullscreen])
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-black text-white px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-md w-full text-center"
-      >
-        <h1 className="text-4xl font-bold mb-6">Rybaczówka Parter</h1>
-        <p className="text-gray-400 mb-8">Wpisz hasło, aby kontynuować</p>
+    <main className="h-screen w-full bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden flex flex-col">
+      <AnimatePresence>
+        {showIntro && (
+          <IntroScreen
+            onFinish={() => {
+              setShowIntro(false)
+              setTimeout(() => setMenuOpen(true), 300)
+            }}
+          />
+        )}
+      </AnimatePresence>
 
-        <form onSubmit={handleSubmit} className="space-y-4 relative">
-          <div className="relative">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              className="w-full px-4 py-2 rounded-lg bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white pr-12"
-              placeholder="Hasło"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(prev => !prev)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-700 hover:text-black"
+      <div className="flex-1 relative">
+        <AnimatePresence mode="wait">
+          {!showIntro && active === 'panorama' && (
+            <motion.div
+              key="panorama"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0"
             >
-              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-            </button>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-white text-black font-semibold py-2 rounded-lg hover:bg-gray-300 transition"
-          >
-            Zobacz
-          </button>
-
-          {error && (
-            <p className="text-red-500 text-sm mt-2">Niepoprawne hasło</p>
+              <PanoramaSection />
+            </motion.div>
           )}
-        </form>
-      </motion.div>
+          {!showIntro && active === 'gallery' && (
+            <motion.div
+              key="gallery"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0"
+            >
+              <GallerySection setFullscreen={setFullscreen} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {!showIntro && (
+        <MobileMenu
+          active={active}
+          setActive={setActive}
+          hidden={fullscreen}
+          isOpen={menuOpen}
+          setIsOpen={setMenuOpen}
+        />
+      )}
     </main>
   )
 }
