@@ -76,7 +76,14 @@ export default function IntroScreen({ onFinish }: IntroScreenProps) {
           transition={{ duration: 1 }}
           className="relative z-20 text-white font-[Helvetica] text-center px-4"
         >
-          
+          <motion.img
+            src="/images/logo.svg"
+            alt="Logo"
+            className="w-100 h-auto mb-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0 }}
+          />
           <h1 className="text-3xl md:text-5xl font-bold tracking-wide leading-relaxed">
             Witaj na Tamce
           </h1>
