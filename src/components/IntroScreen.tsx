@@ -84,9 +84,7 @@ export default function IntroScreen({ onFinish }: IntroScreenProps) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0 }}
           />
-          <h1 className="text-3xl md:text-5xl font-bold tracking-wide leading-relaxed">
-            Witaj na Tamce
-          </h1>
+         
         </motion.div>
       )}
 
