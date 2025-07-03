@@ -12,7 +12,15 @@ const images = [
   { src: '/images/5.jpg', title: 'Schemat Parteru', description: 'Główne i wejsciowe foyer, restauracja, sala uzupełnione o obsługę.' },
   { src: '/images/6.jpg', title: 'Schemat Piętra', description: 'Antresola foyer, balkony i biura znajdują się na tej kondygnacji.' },
   { src: '/images/7.jpg', title: 'Schemat Garażu', description: 'Niewielki garaż z widną samochodową.' },
-  { src: '/images/8.jpg', title: 'Szkic Zagospodarowania Terenu', description: 'Serce budynku w środku.' }
+  { src: '/images/8.jpg', title: 'Szkic Zagospodarowania Terenu', description: 'Serce budynku w środku.' },
+  { src: '/images/9.jpg', title: 'Plansza 0', description: 'Broszura reklamująca przedsięwzięcie.' },
+  { src: '/images/10.jpg', title: 'Plansza 1', description: 'Lokalizacja i orientacja działki.' },
+  { src: '/images/11.jpg', title: 'Plansza 2', description: 'Analizy i wnioski.' },
+  { src: '/images/12.jpg', title: 'Plansza 3', description: 'Zagospodarowanie terenu wyspy.' },
+  { src: '/images/13.jpg', title: 'Plansza 4', description: 'Rzut pareteru.' },
+  { src: '/images/14.jpg', title: 'Plansza 5', description: 'Rzut antresoli.' },
+  { src: '/images/15.jpg', title: 'Plansza 6', description: 'Rzut piętra.' },
+  { src: '/images/16.jpg', title: 'Plansza 7', description: 'Rzut garażu.' },
 ]
 
 export default function GallerySection({ setFullscreen }: { setFullscreen: (v: boolean) => void }) {
